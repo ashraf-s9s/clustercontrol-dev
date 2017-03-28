@@ -1,0 +1,21 @@
+version: '2.1'
+
+services:
+
+  _CLUSTER_NAME_:
+    image: severalnines/centos-ssh
+    ports:
+      - _PUBLISH_PORT_:_DEFAULT_PORT_
+    environment:
+      CLUSTER_TYPE: "_CLUSTER_TYPE_"
+      CLUSTER_NAME: "_CLUSTER_NAME_"
+      INITIAL_CLUSTER_SIZE: _CLUSTER_SIZE_
+      DB_ROOT_PASSWORD: "_DB_ROOT_PASSWORD_"
+      VENDOR: "_VENDOR_"
+      PROVIDER_VERSION: "_PROVIDER_VERSION_" 
+    networks:
+      - _NETWORK_NAME_
+
+networks:
+  _NETWORK_NAME_:
+    driver: bridge

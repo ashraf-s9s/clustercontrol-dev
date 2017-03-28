@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+
+  _CLUSTER_NAME_:
+    deploy:
+      replicas: _CLUSTER_SIZE_
+      restart_policy:
+        condition: on-failure
+        delay: 2s
+        max_attempts: 10
+        window: 5s
+    image: severalnines/centos-ssh
+    ports:
+      - _PUBLISH_PORT_:_DEFAULT_PORT_
+    environment:
+      CLUSTER_TYPE: "_CLUSTER_TYPE_"
+      CLUSTER_NAME: "_CLUSTER_NAME_"
+      INITIAL_CLUSTER_SIZE: _CLUSTER_SIZE_
+      DB_ROOT_PASSWORD: "_DB_ROOT_PASSWORD_"
+      VENDOR: "_VENDOR_"
+      PROVIDER_VERSION: "_PROVIDER_VERSION_"
+      CC_HOST: "_CC_HOST_"
+    networks:
+      - _NETWORK_NAME_
+
+networks:
+  _NETWORK_NAME_:
+    external: true

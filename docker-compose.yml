@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+
+  clustercontrol:
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == docker1.local
+    image: severalnines/clustercontrol-dev
+    ports:
+      - 5000:80
+    networks:
+      - cc_galera
+
+  dockercontrol:
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        window: 30s
+    image: severalnines/dockercontrol
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - cc_galera
+
+networks:
+  cc_galera:
+    driver: overlay
